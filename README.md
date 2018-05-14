@@ -1,1 +1,1 @@
-# aws_pnda_mirror_rhel
+# pnda_ubuntu_mirror_server
