@@ -22,7 +22,7 @@ resource "aws_instance" "mirror" {
   }
 }
 
-resource "aws_eip" "eip" {
+resource "aws_eip" "mirror" {
   instance = "${aws_instance.mirror.id}"
 }
 

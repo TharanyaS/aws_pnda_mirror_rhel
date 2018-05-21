@@ -2,7 +2,7 @@
   "name": "PNDA-mirror-server-rhel-aws",
   "type": "terraform",
   "target_cloud": "aws",
-  "description": "Creates rhel mirror server for PNDA deployment. Tested on us-east-1 and us-west-2 regions",
+  "description": "Creates rhel mirror server for PNDA deployment. Tested on us-west-2 region",
   "prerequisites": "Git needs to be installed in the machine",
   "limitations": ""
 }
