@@ -21,13 +21,18 @@ resource "aws_instance" "mirror" {
     Name = "pnda-mirror-server-rhel"
   }
 }
+
+resource "aws_eip" "eip" {
+  instance = "${aws_instance.mirror.id}"
+}
+
 output "mirror_server_ip" {
-  value = "${aws_instance.mirror.public_ip}"
+  value = "${aws_eip.mirror.public_ip}"
 }
 
 resource "local_file" "cluster_ip" {
   depends_on = [ "null_resource.ansiblerun" ]
-  content = "{ \"dashboard\": \"http://${aws_instance.mirror.public_ip}\" }"
+  content = "{ \"dashboard\": \"http://${aws_eip.mirror.public_ip}\" }"
   filename = "${path.cwd}/externalURL.json"
 }
 
@@ -42,7 +47,7 @@ output "private_ip" {
 
 resource "local_file" "hosts" {
   depends_on = [ "aws_instance.mirror" ]
-  content = "mirror ansible_host=${aws_instance.mirror.public_ip} private_ip=${local.private_ip} tag=${var.tag} branch=${var.branch} value=${var.value}"
+  content = "mirror ansible_host=${aws_eip.mirror.public_ip} private_ip=${local.private_ip} tag=${var.tag} branch=${var.branch} value=${var.value}"
   filename = "${path.cwd}/hosts"
 }
 
